@@ -1,58 +1,43 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.WebUtilities;
-using Newtonsoft.Json;
 using RedditLiveFeed.Model;
 using RedditLiveFeed.Services.Interfaces;
-using RedditLiveFeed.Utils;
-using RedditLiveFeed.Utils.Interfaces;
 
 namespace RedditLiveFeed.Services
 {
     public class RedditFeedService : IRedditFeedService
     {
-        private readonly IRedditClientFactory _clientFactory;
-        public const string FEED_URL = "https://oauth.reddit.com/new";
+        private readonly ConcurrentDictionary<string, RedditFeed> _data = 
+            new ConcurrentDictionary<string, RedditFeed>();
 
-        public RedditFeedService(IRedditClientFactory clientFactory)
+        public RedditFeedService() { }
+
+        public void AddFeed(string id, RedditFeed feed)
         {
-            _clientFactory = clientFactory;
+            _data.TryAdd(id, feed);
         }
 
-        public async Task<RedditFeed> GetNew(string after = "")
+        public List<RedditFeed> GetAll()
         {
-            var client = await _clientFactory.GetClient();
+            return _data.Values.ToList();
+        }
 
-            var parameters = new Dictionary<string, string>();
-            if (!string.IsNullOrEmpty(after))
-            {
-                parameters.Add("after", after);
-            }
+        public RedditFeed GetFeed(string id)
+        {
+            return _data[id];
+        }
 
-            var url = QueryHelpers.AddQueryString(FEED_URL, parameters);
+        public bool TryGetFeed(string id, out RedditFeed feed)
+        {
+            return _data.TryGetValue(id, out feed);
+        }
 
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
-
-            using(var response = await client.SendAsync(request))
-            {
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                    var content = await response.Content.ReadAsStringAsync();
-                    var feed = JsonConvert.DeserializeObject<RedditFeed>(content);
-                    return feed;
-                }
-                catch (HttpRequestException ex) when (response.StatusCode == HttpStatusCode.Unauthorized)
-                {
-
-
-                }
-            }
-
-            return default(RedditFeed);
+        public bool RemoveFeed(string id)
+        {
+            return _data.TryRemove(id, out var feed);
         }
     }
 }

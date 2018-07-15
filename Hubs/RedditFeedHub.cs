@@ -1,29 +1,62 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
 using RedditLiveFeed.Model;
-using RedditLiveFeed.Services;
+using RedditLiveFeed.Services.Interfaces;
 
 namespace RedditLiveFeed.Hubs
 {
     public class RedditFeedHub : Hub
     {
-        public override Task OnConnectedAsync()
+        private readonly IConnectionStateService _stateService;
+        private readonly IRedditFeedService _feedService;
+
+        public RedditFeedHub(IConnectionStateService stateService,
+            IRedditFeedService feedService)
         {
-            string name = Context.User.Identity.Name;
+            _stateService = stateService;
+            _feedService = feedService;
+        }
 
-            //var test = Channel.CreateUnbounded<int>();
+        public ChannelReader<IEnumerable<RedditEntry>> Feed(string feedId)
+        {
+            var channel = Channel.CreateUnbounded<IEnumerable<RedditEntry>>();
 
-            var id = Context.ConnectionId;
+            var connection = new HubConnectionState
+            {
+                ConnectionId = Context.ConnectionId,
+                FeedId = feedId,
+                StreamChannel = channel,
+            };
 
-            // use this method to pass connection Id to the injected service bus
+            if (_feedService.TryGetFeed(feedId, out var feed))
+            {
+                var data = feed.GetData();
+                if (data.Count() > 0)
+                {
+                    _ = connection.StreamChannel.Writer.WriteAsync(data);
+                    connection.LastEntryName = feed.LastEntryName;
+                }
+            }
+            else
+            {
+                _feedService.AddFeed(feedId, new RedditFeed
+                {
+                    Id = feedId
+                });
+            }
 
-            return base.OnConnectedAsync();
+            _stateService.AddConnection(connection);
+
+            return channel.Reader;
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
+            _stateService.RemoveConnection(Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
         }
     }

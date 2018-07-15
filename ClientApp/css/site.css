@@ -1,68 +1,50 @@
-.main-nav li .glyphicon {
-    margin-right: 10px;
+/*body {
+    background: #E3F2FD;
+}*/
+
+/*a.entry-url:link {
+    color: #212121;
+    text-decoration: none;
+    font-weight: normal;
 }
 
-/* Highlighting rules for nav menu items */
-.main-nav li a.active,
-.main-nav li a.active:hover,
-.main-nav li a.active:focus {
-    background-color: #4189C7;
-    color: white;
+a.entry-url:visited {
+    color: #212121;
+    text-decoration: none;
+    font-weight: normal;
 }
 
-/* Keep the nav menu independent of scrolling and on top of other items */
-.main-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
+a.entry-url:hover {
+    color: #212121;
+    text-decoration: none;
+    font-weight: normal;
 }
 
-@media (max-width: 767px) {
-    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
-    body {
-        padding-top: 50px;
-    }
+a.entry-url:active {
+    color: #212121;
+    text-decoration: none;
+    font-weight: normal;
 }
 
-@media (min-width: 768px) {
-    /* On small screens, convert the nav menu to a vertical sidebar */
-    .main-nav {
-        height: 100%;
-        width: calc(25% - 20px);
-    }
-    .main-nav .navbar {
-        border-radius: 0px;
-        border-width: 0px;
-        height: 100%;
-    }
-    .main-nav .navbar-header {
-        float: none;
-    }
-    .main-nav .navbar-collapse {
-        border-top: 1px solid #444;
-        padding: 0px;
-    }
-    .main-nav .navbar ul {
-        float: none;
-    }
-    .main-nav .navbar li {
-        float: none;
-        font-size: 15px;
-        margin: 6px;
-    }
-    .main-nav .navbar li a {
-        padding: 10px 16px;
-        border-radius: 4px;
-    }
-    .main-nav .navbar a {
-        /* If a menu item's text is too long, truncate it */
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.block-text {
+    margin: 0 0 0 1rem;
+}
+
+.block {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem;
+    margin: 0 0 1rem 0;
+    background: #FAFAFA;
+}
+
+.block > img {
+    width: 75px;
+    margin: 0 1rem 0 0;
+}
+
+.block > div {
+    flex: 1;
 }
 
 .fade-enter {
@@ -81,4 +63,4 @@
 .fade-exit-active {
     opacity: 0.01;
     transition: opacity 200ms ease-in;
-}
+}*/

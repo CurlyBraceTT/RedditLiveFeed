@@ -27,6 +27,11 @@ namespace RedditLiveFeed.Utils
 
             if (client != null)
             {
+                if (client.Expired)
+                {
+                    await client.RefreshAccess();
+                }
+
                 return client;
             }
 
@@ -37,6 +42,11 @@ namespace RedditLiveFeed.Utils
 
                 if(client != null)
                 {
+                    if (client.Expired)
+                    {
+                        await client.RefreshAccess();
+                    }
+
                     return client;
                 }
 
@@ -62,11 +72,6 @@ namespace RedditLiveFeed.Utils
             if (!client.Authenticated)
             {
                 await client.Authenticate();
-            }
-
-            if (client.Expired)
-            {
-                await client.RefreshAccess();
             }
 
             return client;

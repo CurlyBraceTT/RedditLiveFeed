@@ -34,9 +34,11 @@ namespace RedditLiveFeed
 
             services.AddSingleton<IRedditClientFactory, RedditClientFactory>();
 
-            services.AddTransient<IRedditFeedService, RedditFeedService>();
+            services.AddTransient<IRedditApiService, RedditApiService>();
             services.AddTransient<INotifyService, NotifyService>();
 
+            services.AddSingleton<IConnectionStateService, ConnectionStateService>();
+            services.AddSingleton<IRedditFeedService, RedditFeedService>();
             services.AddSingleton<IHostedService, RedditHostedService>();
         }
 
@@ -64,10 +66,16 @@ namespace RedditLiveFeed
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
-                //routes.MapSpaFallbackRoute(
-                //    name: "spa-fallback",
-                //    defaults: new { controller = "Home", action = "Index" });
+            app.MapWhen(x => !x.Request.Path.Value.StartsWith("/hub"), builder =>
+            {
+                builder.UseMvc(routes =>
+                {
+                    routes.MapSpaFallbackRoute(
+                        name: "spa-fallback",
+                        defaults: new { controller = "Home", action = "Index" });
+                });
             });
 
             app.UseSignalR(options =>

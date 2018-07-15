@@ -5,12 +5,12 @@ using Microsoft.Extensions.Hosting;
 
 namespace RedditLiveFeed.Services
 {
-    public abstract class MyHostedService : IHostedService, IDisposable
+    public abstract class BaseHostedService : IHostedService, IDisposable
     {
         private Task _executingTask;
         private readonly CancellationTokenSource _stoppingCts = new CancellationTokenSource();
 
-        public MyHostedService()
+        public BaseHostedService()
         {
         }
 

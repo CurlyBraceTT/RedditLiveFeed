@@ -58,9 +58,9 @@ namespace RedditLiveFeed.Utils
             CurrentAccessToken = authDefinition.access_token;
             int expiresIn = authDefinition.expires_in;
             ExpireTime = DateTime.Now.AddSeconds(expiresIn);
-            if(expiresIn < SAFE_EXPRITED_GAP)
+            if(expiresIn > SAFE_EXPRITED_GAP)
             {
-                ExpireTime.AddSeconds(SAFE_EXPRITED_GAP);
+                ExpireTime = ExpireTime.AddSeconds(- SAFE_EXPRITED_GAP);
             }
 
             RefreshToken = authDefinition.refresh_token;
@@ -91,9 +91,9 @@ namespace RedditLiveFeed.Utils
             CurrentAccessToken = authDefinition.access_token;
             int expiresIn = authDefinition.expires_in;
             ExpireTime = DateTime.Now.AddSeconds(expiresIn);
-            if (expiresIn < SAFE_EXPRITED_GAP)
+            if (expiresIn > SAFE_EXPRITED_GAP)
             {
-                ExpireTime.AddSeconds(SAFE_EXPRITED_GAP);
+                ExpireTime = ExpireTime.AddSeconds(- SAFE_EXPRITED_GAP);
             }
         }
 

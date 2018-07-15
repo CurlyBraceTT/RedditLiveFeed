@@ -23,6 +23,14 @@
     <Content Remove="ClientApp\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\routes.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\routes.tsx" />
+  </ItemGroup>
+
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

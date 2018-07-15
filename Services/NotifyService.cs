@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RedditLiveFeed.Hubs;
 using RedditLiveFeed.Model;
+using RedditLiveFeed.Services.Interfaces;
 
 namespace RedditLiveFeed.Services
 {
@@ -17,7 +18,7 @@ namespace RedditLiveFeed.Services
             _hub = hub;
         }
 
-        public async Task NotifyAsync(RedditFeed feed)
+        public async Task NotifyAsync(List<RedditEntry> feed)
         {
             var settings = new JsonSerializerSettings
             {
