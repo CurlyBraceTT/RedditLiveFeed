@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,72 +6,87 @@ namespace RedditLiveFeed.Model
 {
     public class RedditFeed
     {
-        class DescComparer<T> : IComparer<T>
+        class FeedComparer : IComparer<RedditEntry>
         {
-            public int Compare(T x, T y)
+            public int Compare(RedditEntry x, RedditEntry y)
             {
-                return Comparer<T>.Default.Compare(y, x);
+                return Comparer<long>.Default.Compare(y.CreatedUtc, x.CreatedUtc);
             }
         }
 
         public string Id { get; set; }
-        public string LastEntryName
-        {
-            get
-            {
-                if(_data.Count == 0)
-                {
-                    return string.Empty;
-                }
-
-                return _data.First().Value.Name;
-            }
-        }
-
+        public string LastEntryName { get; private set; }
         public int Size { get; private set; }
-        private readonly SortedList<long, RedditEntry> _data;
+
+        private readonly HashSet<string> _hashset = new HashSet<string>();
+        private readonly List<RedditEntry> _data = new List<RedditEntry>();
 
         public RedditFeed(int size = 10)
         {
             Size = size;
-            _data = new SortedList<long, RedditEntry>(size, new DescComparer<long>());
         }
 
         public void AddRange(IEnumerable<RedditEntry> entries)
         {
             foreach(var e in entries)
             {
-                _data.Add(e.CreatedUtc, e);
+                if(_hashset.Contains(e.Name))
+                {
+                    continue;
+                }
+
+                _hashset.Add(e.Name);
+                _data.Add(e);
             }
+
+            NormalizeData();
         }
 
         public void Add(RedditEntry entry)
         {
-            _data.Add(entry.CreatedUtc, entry);
+            if (_hashset.Contains(entry.Name))
+            {
+                return;
+            }
 
-            //TODO Remove Items from list
+            _hashset.Add(entry.Name);
+            _data.Add(entry);
+            NormalizeData();
         }
 
         public IEnumerable<RedditEntry> GetData(string lastEntryName = "")
         {
             if(string.IsNullOrEmpty(lastEntryName))
             {
-                return _data.Values;
+                return _data;
             }
 
             return GetDataInner(lastEntryName) ?? new List<RedditEntry>();
+        }
+
+        private void NormalizeData()
+        {
+            _data.Sort(new FeedComparer());
+
+            while(_data.Count > Size)
+            {
+                _hashset.Remove(_data[_data.Count - 1].Name);
+                _data.RemoveAt(_data.Count - 1);
+            }
+
+            LastEntryName = _data.First().Name;
         }
 
         private IEnumerable<RedditEntry> GetDataInner(string lastEntryName = "")
         {
             foreach (var e in _data)
             {
-                if (string.Equals(e.Value.Name, lastEntryName, StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(e.Name, lastEntryName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     yield break;
                 }
 
-                yield return e.Value;
+                yield return e;
             }
         }
     }

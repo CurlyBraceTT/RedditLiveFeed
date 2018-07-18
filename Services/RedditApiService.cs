@@ -16,7 +16,7 @@ namespace RedditLiveFeed.Services
     public class RedditApiService : IRedditApiService
     {
         private readonly IRedditClientFactory _clientFactory;
-        public const string FEED_URL = "https://oauth.reddit.com/r/gif/new";
+        public const string FEED_URL = "https://oauth.reddit.com/r/mgtow/new";
 
         public RedditApiService(IRedditClientFactory clientFactory)
         {

@@ -1,7 +1,7 @@
-import './css/site.css';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'popper.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/site.css';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';

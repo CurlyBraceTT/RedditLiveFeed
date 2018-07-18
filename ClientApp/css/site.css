@@ -1,8 +1,4 @@
-/*body {
-    background: #E3F2FD;
-}*/
-
-/*a.entry-url:link {
+a.entry-url:link {
     color: #212121;
     text-decoration: none;
     font-weight: normal;
@@ -63,4 +59,4 @@ a.entry-url:active {
 .fade-exit-active {
     opacity: 0.01;
     transition: opacity 200ms ease-in;
-}*/
+}

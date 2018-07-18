@@ -38,7 +38,7 @@ namespace RedditLiveFeed.Services
                 {
                     foreach(var feed in _feedService.GetAll())
                     {
-                        var listing = await _apiService.GetNew(feed.LastEntryName, "", 10);
+                        var listing = await _apiService.GetNew(limit: 10);
                         if (listing.Children.Count > 0)
                         {
                             _logger.LogInformation("Pushing new data: {0}",

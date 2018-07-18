@@ -7,29 +7,15 @@ import {
 } from 'react-transition-group';
 
 interface RedditFeedState {
-    seconds: number,
-    interval: number,
     connection: any,
     entries: Array<any>,
 }
 
 class RedditFeed extends React.Component<any, RedditFeedState> {
     state = {
-        seconds: 0,
-        interval: 0,
         connection: null,
         entries: new Array<any>(),
     };
-
-    constructor() {
-        super();
-    }
-
-    tick() {
-        //this.setState((prevState: RedditFeedState) => ({
-        //    seconds: prevState.seconds + 1
-        //}));
-    }
 
     componentDidMount() {
         const connection = new signalR.HubConnectionBuilder()
@@ -57,19 +43,6 @@ class RedditFeed extends React.Component<any, RedditFeedState> {
 
             })
             .catch(err => console.log('Error while establishing connection :('));
-
-        //connection.on("RefreshFeed", (feedStr: string) => {
-        //    const feed = JSON.parse(feedStr);
-        //    console.log(feed);
-        //    this.setState({ entries: feed });
-        //});
-
-        //const interval = setInterval(() => this.tick(), 1000);
-        //this.setState({ interval: interval });
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.state.interval);
     }
 
     render() {
