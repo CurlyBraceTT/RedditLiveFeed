@@ -5,7 +5,6 @@ import './css/site.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import RedditFeed from './components/RedditFeed';
 import { BrowserRouter } from 'react-router-dom';
 import * as RoutesModule from './routes';
 let routes = RoutesModule.routes;

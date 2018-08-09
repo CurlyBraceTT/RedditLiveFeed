@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavMenu } from './NavMenu';
+import { NavMenu } from 'components';
 
 export interface LayoutProps {
     children?: React.ReactNode;
@@ -11,9 +11,7 @@ export class Layout extends React.Component<LayoutProps, {}> {
             <div>
                 <NavMenu />
                 <div className='container'>
-                    <div className='row'>
-                        {this.props.children}
-                    </div>
+                    {this.props.children}
                 </div>
             </div>
         );

@@ -5,7 +5,7 @@ export class NavMenu extends React.Component<{}, {}> {
     public render() {
         return (
             <nav className="navbar navbar-dark bg-dark">
-                <a className="navbar-brand" href="#">Navbar</a>
+                <a className="navbar-brand" href="#">#</a>
             </nav>
         )
     }

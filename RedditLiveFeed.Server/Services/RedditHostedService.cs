@@ -39,11 +39,12 @@ namespace RedditLiveFeed.Server.Services
                 {
                     foreach(var feed in _feedService.GetAll())
                     {
-                        var listing = await _apiService.GetNew(limit: 10);
+                        var subreddit = feed.Id;
+                        var listing = await _apiService.GetNew(subreddit: subreddit, limit: 10);
                         if (listing.Children.Count > 0)
                         {
-                            _logger.LogInformation("Pushing new data: {0}",
-                                string.Join(", ", listing.Children.Select(d => d.Title)));
+                            _logger.LogInformation("Pushing new data from {0}: {1}",
+                                 subreddit, string.Join(", ", listing.Children.Select(d => d.Title)));
                             feed.AddRange(listing.Children);
                         }
                     }

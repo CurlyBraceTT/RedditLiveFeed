@@ -60,3 +60,7 @@ a.entry-url:active {
     opacity: 0.01;
     transition: opacity 200ms ease-in;
 }
+
+.reddit-entries {
+    width: 100%;
+}

@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedditLiveFeed.Server", "RedditLiveFeed.Server\RedditLiveFeed.Server.csproj", "{69D32A70-C9A2-4914-A8EA-432442854E4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditLiveFeed.Main", "RedditLiveFeed.Main\RedditLiveFeed.Main.csproj", "{517F4E49-DDE7-4A8D-B4B0-21682F50FC6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedditLiveFeed.Main", "RedditLiveFeed.Main\RedditLiveFeed.Main.csproj", "{517F4E49-DDE7-4A8D-B4B0-21682F50FC6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditLiveFeed.Tests", "RedditLiveFeed.Tests\RedditLiveFeed.Tests.csproj", "{BE6DBD05-63CE-47BB-BB21-494554FA708C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{517F4E49-DDE7-4A8D-B4B0-21682F50FC6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{517F4E49-DDE7-4A8D-B4B0-21682F50FC6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{517F4E49-DDE7-4A8D-B4B0-21682F50FC6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE6DBD05-63CE-47BB-BB21-494554FA708C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE6DBD05-63CE-47BB-BB21-494554FA708C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE6DBD05-63CE-47BB-BB21-494554FA708C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE6DBD05-63CE-47BB-BB21-494554FA708C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

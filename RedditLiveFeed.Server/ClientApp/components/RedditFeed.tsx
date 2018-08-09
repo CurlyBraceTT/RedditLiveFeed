@@ -11,13 +11,27 @@ interface RedditFeedState {
     entries: Array<any>,
 }
 
-class RedditFeed extends React.Component<any, RedditFeedState> {
+export class RedditFeed extends React.Component<any, RedditFeedState> {
     state = {
         connection: null,
         entries: new Array<any>(),
     };
 
+    constructor(props) {
+        super(props);
+    }
+
+    componentWillUnmount() {
+        this.state.connection = null;
+    }
+
     componentDidMount() {
+        const feedId = this.props.feedId;
+
+        if (!feedId) {
+            return;
+        }
+
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/hub")
             .build();
@@ -26,7 +40,7 @@ class RedditFeed extends React.Component<any, RedditFeedState> {
             .then(() => {
                 console.log('Connection started!')
 
-                connection.stream("Feed", "new")
+                connection.stream("Feed", feedId)
                     .subscribe({
                         next: (feed) => {
                             console.log(feed);
@@ -62,12 +76,10 @@ class RedditFeed extends React.Component<any, RedditFeedState> {
         }
 
         return (
-            <div className="container">
-                <div className="row">
-                    <TransitionGroup className="todo-list"> 
-                        {entriesJsx}
-                    </TransitionGroup>
-                </div>
+            <div className="row">
+                <TransitionGroup className="reddit-entries"> 
+                    {entriesJsx}
+                </TransitionGroup>
             </div>
         );
     }

@@ -5,6 +5,6 @@ namespace RedditLiveFeed.Main.Services.Interfaces
 {
     public interface IRedditApiService
     {
-        Task<RedditListing> GetNew(string before = "", string after = "", int limit = 0);
+        Task<RedditListing> GetNew(string subreddit, string before = "", string after = "", int limit = 0);
     }
 }

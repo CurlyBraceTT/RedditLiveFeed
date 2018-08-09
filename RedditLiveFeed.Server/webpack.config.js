@@ -4,6 +4,8 @@ const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const bundleOutputDir = './wwwroot/dist';
 
+var componentsPath = path.resolve(__dirname, './ClientApp/components');
+
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
     const mode = isDevBuild ? 'development' : 'production';
@@ -12,7 +14,12 @@ module.exports = (env) => {
         mode: mode,
         stats: { modules: false },
         entry: { 'main': './ClientApp/boot.tsx' },
-        resolve: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+        resolve: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+            alias: {
+                components: componentsPath
+            },
+        },
         output: {
             path: path.join(__dirname, bundleOutputDir),
             filename: '[name].js',
